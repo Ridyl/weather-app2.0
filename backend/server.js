@@ -2,16 +2,24 @@ import express from 'express';
 import axios from 'axios';
 const app = express();
 
-import dotenv from 'dotenv';
-dotenv.config();
+const apiKey = import.meta.env.WEATHER_API_KEY;
 
-const apiKey = process.env.WEATHER_API_KEY;
+app.get('/api/search/:city', async (req, res) => {
+	const cityName = req.params.city;
 
-app.get('/api/search/:city', (req, res) => {
-    const cityName = req.params.city;
-    axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=imperial`)
-            .then(response => res.send(response.data))
-            .catch(err => console.log());
+	try {
+		const latlon_url = `https://api.openweathermap.org/data/3.0/weather?q=${cityName}&appid=${apiKey}&units=imperial`;
+		const initial = await axios.get(latlon_url);
+		const { lon, lat } = initial.data.coord;
+
+		const weather_url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+		const weather = await axios.get(weather_url);
+
+		res.send(weather.data);
+	} catch (err) {
+		console.error('API call error:', err.message);
+		res.status(500).send({ error: 'Failed to fetch weather data' });
+	}
 });
 
 export default app;

@@ -1,9 +1,10 @@
 import { createContext, useReducer } from 'react';
+import PropTypes from 'prop-types';
 
 const WeatherContext = createContext();
 
 const initialState = {
-	loading: null,
+	loading: false,
 	data: null,
 	error: null,
 };
@@ -13,17 +14,20 @@ const weatherReducer = (state, action) => {
 		case 'FETCH_START':
 			return {
 				...state,
-				loading: [...state.loading, action.payload],
+				loading: true,
+				error: null,
 			};
 		case 'FETCH_SUCCESS':
 			return {
 				...state,
-				loading: [...state.data, action.payload],
+				data: action.data,
+				loading: false,
 			};
 		case 'FETCH_ERROR':
 			return {
 				...state,
-				loading: [...state.error, action.payload],
+				error: action.error,
+				loading: false,
 			};
 	}
 };
@@ -36,6 +40,10 @@ export const WeatherProvider = ({ children }) => {
 			{children}
 		</WeatherContext.Provider>
 	);
+};
+
+WeatherProvider.propTypes = {
+	children: PropTypes.any,
 };
 
 export default WeatherContext;

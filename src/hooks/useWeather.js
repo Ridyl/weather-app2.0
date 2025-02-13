@@ -1,16 +1,34 @@
 import { useContext } from 'react';
 import WeatherContext from '../context/WeatherContext';
 
-const weather_api_url = '/api/search';
+const getlatlon_api_url = '/api/search';
 
 const useWeather = () => {
 	const { state, dispatch } = useContext(WeatherContext);
 
 	const fetchWeather = async (city) => {
 		if (!city) return;
-		dispatch({ type: 'FETCH_START' });
+		dispatch({
+			type: 'FETCH_START',
+			loading: true,
+		});
 
-		// Add logic for fetching weather data. Make sure you handle any errors gracefully
+		try {
+			const initial = await fetch(`${getlatlon_api_url}/${city}`);
+			if (!initial.ok) {
+				throw new Error('Failed to fetch weather data');
+			}
+			const weatherData = await initial.json();
+			dispatch({
+				type: 'FETCH_SUCCESS',
+				data: weatherData,
+			});
+		} catch (error) {
+			dispatch({
+				type: 'FETCH_ERROR',
+				error: error.message,
+			});
+		}
 	};
 
 	return { ...state, fetchWeather };

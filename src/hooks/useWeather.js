@@ -21,7 +21,8 @@ const useWeather = () => {
 			const weatherData = await initial.json();
 			dispatch({
 				type: 'FETCH_SUCCESS',
-				data: weatherData,
+				currData: initial,
+				foreData: weatherData,
 			});
 		} catch (error) {
 			dispatch({

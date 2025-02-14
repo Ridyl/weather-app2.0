@@ -5,8 +5,7 @@ const WeatherContext = createContext();
 
 const initialState = {
 	loading: false,
-	currData: null,
-	foreData: null,
+	data: null,
 	error: null,
 };
 
@@ -21,8 +20,7 @@ const weatherReducer = (state, action) => {
 		case 'FETCH_SUCCESS':
 			return {
 				...state,
-				currData: action.initial,
-				foreData: action.weatherData,
+				data: action.weatherData,
 				loading: false,
 			};
 		case 'FETCH_ERROR':

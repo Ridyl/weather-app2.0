@@ -1,7 +1,14 @@
 import useWeather from '../hooks/useWeather';
+import { useState } from 'react';
 
 const WeatherDisplay = () => {
 	const { data, loading, error } = useWeather();
+	const [city, setCity] = useState('');
+	const { fetchWeather } = useWeather(city);
+
+	const handleSearch = () => {
+		fetchWeather(city);
+	};
 
 	if (loading) {
 		return <p>Loading...</p>;
@@ -18,13 +25,32 @@ const WeatherDisplay = () => {
 		// return the necessary elements to display the weather information
 		return (
 			<>
+				<h1>Weather App</h1>
+				<div>
+					<input
+						placeholder='Search...'
+						onChange={(e) => setCity(e.target.value)}
+					></input>
+					<button onClick={handleSearch}>Search</button>
+				</div>
 				<h2>{cityName}</h2>
 				<p>{data.main.temp}</p>
 			</>
 		);
 	}
 
-	return <p>Please search for a city to display weather data.</p>;
+	return (
+		<>
+			<h1>Weather App</h1>
+			<div>
+				<input
+					placeholder='Search...'
+					onChange={(e) => setCity(e.target.value)}
+				></input>
+				<button onClick={handleSearch}>Search</button>
+			</div>
+			<p>Please search for a city to display weather data.</p>
+		</>
+	);
 };
-
 export default WeatherDisplay;

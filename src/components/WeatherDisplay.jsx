@@ -18,8 +18,8 @@ const WeatherDisplay = () => {
 		return <p>Error: {error}</p>;
 	}
 
+	// Return after data is present
 	if (data) {
-		// Add your code here
 		let cityName = data.name;
 		console.log(data);
 		// return the necessary elements to display the weather information
@@ -39,18 +39,7 @@ const WeatherDisplay = () => {
 		);
 	}
 
-	return (
-		<>
-			<h1>Weather App</h1>
-			<div>
-				<input
-					placeholder='Search...'
-					onChange={(e) => setCity(e.target.value)}
-				></input>
-				<button onClick={handleSearch}>Search</button>
-			</div>
-			<p>Please search for a city to display weather data.</p>
-		</>
-	);
+	// Standard page return
+	return <></>;
 };
 export default WeatherDisplay;

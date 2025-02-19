@@ -1,4 +1,6 @@
 import useWeather from '../hooks/useWeather';
+import Search from './Search';
+import LeftData from './LeftData';
 import { useState } from 'react';
 
 const WeatherDisplay = () => {
@@ -6,7 +8,8 @@ const WeatherDisplay = () => {
 	const [city, setCity] = useState('');
 	const { fetchWeather } = useWeather(city);
 
-	const handleSearch = () => {
+	const handleSearch = (event) => {
+		event.preventDefault();
 		fetchWeather(city);
 	};
 
@@ -20,26 +23,51 @@ const WeatherDisplay = () => {
 
 	// Return after data is present
 	if (data) {
-		let cityName = data.name;
-		console.log(data);
-		// return the necessary elements to display the weather information
+		let currWeather = {
+			leftSide: {
+				sunrise: data.current.sunrise,
+				sunset: data.current.sunset,
+				temp: data.current.temp,
+				feel: data.current.feels_like,
+				humid: data.current.humidity,
+				windSpeed: data.current.wind_speed,
+				gustSpeed: data.current.wind_gust,
+				windDeg: data.current.wind_deg,
+				rain: data.current.rain,
+				snow: data.current.snow,
+				uv: data.current.uvi,
+				hourly: data.hourly,
+			},
+
+			rightSide: {
+				weatherID: data.current.weather.id,
+				param: data.current.weather.main,
+				desc: data.current.weather.description,
+				icon: data.current.weather.icon,
+			},
+
+			alerts: {
+				event: data.alerts.event,
+				start: data.alerts.start,
+				end: data.alerts.end,
+				desc: data.alerts.description,
+				tags: data.alerts.tags,
+			},
+		};
+
 		return (
 			<>
-				<h1>Weather App</h1>
-				<div>
-					<input
-						placeholder='Search...'
-						onChange={(e) => setCity(e.target.value)}
-					></input>
-					<button onClick={handleSearch}>Search</button>
-				</div>
-				<h2>{cityName}</h2>
-				<p>{data.main.temp}</p>
+				<Search sCity={setCity} click={handleSearch} />
 			</>
 		);
 	}
 
 	// Standard page return
-	return <></>;
+	return (
+		<>
+			<Search sCity={setCity} click={handleSearch} />
+			<LeftData />
+		</>
+	);
 };
 export default WeatherDisplay;

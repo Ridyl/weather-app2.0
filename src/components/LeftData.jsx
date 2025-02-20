@@ -83,7 +83,7 @@ export default function LeftData() {
 			</div>
 			<UVMessage uv={uv} />
 			<LeftChart />
-			<div className='row-span-2'>
+			<div className='row-span-2 mt-4'>
 				<p className='underline text-2xl'>Alerts:</p>
 				<p className='font-light'>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam

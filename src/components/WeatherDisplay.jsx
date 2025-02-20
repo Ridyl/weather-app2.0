@@ -58,6 +58,7 @@ const WeatherDisplay = () => {
 		return (
 			<>
 				<Search sCity={setCity} click={handleSearch} />
+				<LeftData weather={currWeather.leftSide} />
 			</>
 		);
 	}

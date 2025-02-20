@@ -1,8 +1,19 @@
 import LeftChart from './LeftChart';
+import { useState } from 'react';
+import PropType from 'prop-types';
 
-export default function LeftData() {
-	let uv = 2;
-	let degree = 310;
+export default function LeftData({ data }) {
+	const [weather, setWeather] = useState({
+		temp: 0,
+		feel: 0,
+		windDeg: 0,
+		uv: 0,
+		humid: 0,
+	});
+
+	if (data) {
+		setWeather(data);
+	}
 
 	// Function to convert given degree to cardinal direction
 	function findDirection(degree) {
@@ -71,17 +82,19 @@ export default function LeftData() {
 			<div className='flex flex-col row-span-3 justify-center'>
 				{/* Current Temp */}
 				<div className='flex text-6xl items-baseline'>
-					<p className='flex-1'>20&deg;</p>
+					<p className='flex-1'>{weather.temp}&deg;</p>
 					<p className='text-sm mr-0'>feels</p>
-					<p>18&deg;</p>
+					<p>{weather.feel}&deg;</p>
 				</div>
 				{/* Humidity and Wind */}
 				<div className='flex items-baseline'>
-					<p className='text-4xl flex-1 font-light'>5.8%</p>
-					<p className='text-sm ml-0.5'>Wind: {findDirection(degree)} 6 mph</p>
+					<p className='text-4xl flex-1 font-light'>{weather.humid}%</p>
+					<p className='text-sm ml-0.5'>
+						Wind: {findDirection(weather.windDeg)} 6 mph
+					</p>
 				</div>
 			</div>
-			<UVMessage uv={uv} />
+			<UVMessage uv={weather.uv} />
 			<LeftChart />
 			<div className='row-span-2 mt-4'>
 				<p className='underline text-2xl'>Alerts:</p>

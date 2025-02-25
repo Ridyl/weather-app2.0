@@ -1,91 +1,101 @@
-export default function RightData() {
+import { useState } from 'react';
+
+export default function RightData({ weather }) {
 	const weatherCodes = {
-		Thunderstorm: {
-			200: { description: 'Thunderstorm with Light Rain', icon: '11d' },
-			201: { description: 'Thunderstorm with Rain', icon: '11d' },
-			202: { description: 'Thunderstorm with Heavy Rain', icon: '11d' },
-			210: { description: 'Light Thunderstorm', icon: '11d' },
-			211: { description: 'Thunderstorm', icon: '11d' },
-			212: { description: 'Heavy Thunderstorm', icon: '11d' },
-			221: { description: 'Ragged Thunderstorm', icon: '11d' },
-			230: { description: 'Thunderstorm with Light Drizzle', icon: '11d' },
-			231: { description: 'Thunderstorm with Drizzle', icon: '11d' },
-			232: { description: 'Thunderstorm with Heavy Drizzle', icon: '11d' },
-		},
-		Drizzle: {
-			300: { description: 'Light Intensity Drizzle', icon: '09d' },
-			301: { description: 'Drizzle', icon: '09d' },
-			302: { description: 'Heavy Intensity Drizzle', icon: '09d' },
-			310: { description: 'Light Intensity Drizzle Rain', icon: '09d' },
-			311: { description: 'Drizzle Rain', icon: '09d' },
-			312: { description: 'Heavy Intensity Drizzle Rain', icon: '09d' },
-			313: { description: 'Shower Rain and Drizzle', icon: '09d' },
-			314: { description: 'Heavy Shower Rain and Drizzle', icon: '09d' },
-			321: { description: 'Shower Drizzle', icon: '09d' },
-		},
-		Rain: {
-			500: { description: 'Light Rain', icon: '10d' },
-			501: { description: 'Moderate Rain', icon: '10d' },
-			502: { description: 'Heavy Intensity Rain', icon: '10d' },
-			503: { description: 'Very Heavy Rain', icon: '10d' },
-			504: { description: 'Extreme Rain', icon: '10d' },
-			511: { description: 'Freezing Rain', icon: '13d' },
-			520: { description: 'Light Intensity Shower Rain', icon: '09d' },
-			521: { description: 'Shower Rain', icon: '09d' },
-			522: { description: 'Heavy Intensity Shower Rain', icon: '09d' },
-			531: { description: 'Ragged Shower Rain', icon: '09d' },
-		},
-		Snow: {
-			600: { description: 'Light Snow', icon: '13d' },
-			601: { description: 'Snow', icon: '13d' },
-			602: { description: 'Heavy Snow', icon: '13d' },
-			611: { description: 'Sleet', icon: '13d' },
-			612: { description: 'Light Shower Sleet', icon: '13d' },
-			613: { description: 'Shower Sleet', icon: '13d' },
-			615: { description: 'Light Rain and Snow', icon: '13d' },
-			616: { description: 'Rain and Snow', icon: '13d' },
-			620: { description: 'Light Shower Snow', icon: '13d' },
-			621: { description: 'Shower Snow', icon: '13d' },
-			622: { description: 'Heavy Shower Snow', icon: '13d' },
-		},
-		Atmosphere: {
-			701: { description: 'Mist', icon: '50d' },
-			711: { description: 'Smoke', icon: '50d' },
-			721: { description: 'Haze', icon: '50d' },
-			731: { description: 'Sand/Dust Whirls', icon: '50d' },
-			741: { description: 'Fog', icon: '50d' },
-			751: { description: 'Sand', icon: '50d' },
-			761: { description: 'Dust', icon: '50d' },
-			762: { description: 'Volcanic Ash', icon: '50d' },
-			771: { description: 'Squalls', icon: '50d' },
-			781: { description: 'Tornado', icon: '50d' },
-		},
-		Clear: {
-			800: { description: 'Clear Sky', icons: ['01d', '01n'] },
-		},
-		Clouds: {
-			801: { description: 'Few Clouds: 11-25%', icons: ['02d', '02n'] },
-			802: { description: 'Scattered Clouds: 25-50%', icons: ['03d', '03n'] },
-			803: { description: 'Broken Clouds: 51-84%', icons: ['04d', '04n'] },
-			804: { description: 'Overcast Clouds: 85-100%', icons: ['04d', '04n'] },
-		},
+		101: 'No Weather Data to Pull',
+
+		200: 'Thunderstorm with Light Rain',
+		201: 'Thunderstorm with Rain',
+		202: 'Thunderstorm with Heavy Rain',
+		210: 'Light Thunderstorm',
+		211: 'Thunderstorm',
+		212: 'Heavy Thunderstorm',
+		221: 'Ragged Thunderstorm',
+		230: 'Thunderstorm with Light Drizzle',
+		231: 'Thunderstorm with Drizzle',
+		232: 'Thunderstorm with Heavy Drizzle',
+
+		300: 'Light Intensity Drizzle',
+		301: 'Drizzle',
+		302: 'Heavy Intensity Drizzle',
+		310: 'Light Intensity Drizzle Rain',
+		311: 'Drizzle Rain',
+		312: 'Heavy Intensity Drizzle Rain',
+		313: 'Shower Rain and Drizzle',
+		314: 'Heavy Shower Rain and Drizzle',
+		321: 'Shower Drizzle',
+
+		500: 'Light Rain',
+		501: 'Moderate Rain',
+		502: 'Heavy Intensity Rain',
+		503: 'Very Heavy Rain',
+		504: 'Extreme Rain',
+		511: 'Freezing Rain',
+		520: 'Light Intensity Shower Rain',
+		521: 'Shower Rain',
+		522: 'Heavy Intensity Shower Rain',
+		531: 'Ragged Shower Rain',
+
+		600: 'Light Snow',
+		601: 'Snow',
+		602: 'Heavy Snow',
+		611: 'Sleet',
+		612: 'Light Shower Sleet',
+		613: 'Shower Sleet',
+		615: 'Light Rain and Snow',
+		616: 'Rain and Snow',
+		620: 'Light Shower Snow',
+		621: 'Shower Snow',
+		622: 'Heavy Shower Snow',
+
+		701: 'Mist',
+		711: 'Smoke',
+		721: 'Haze',
+		731: 'Sand/Dust Whirls',
+		741: 'Fog',
+		751: 'Sand',
+		761: 'Dust',
+		762: 'Volcanic Ash',
+		771: 'Squalls',
+		781: 'Tornado',
+
+		800: 'Clear Sky',
+
+		801: 'Few Clouds: 11-25%',
+		802: 'Scattered Clouds: 25-50%',
+		803: 'Broken Clouds: 51-84%',
+		804: 'Overcast Clouds: 85-100%',
 	};
+
+	let [data, setData] = useState({
+		id: 101,
+		main: 'Enter an area to see the weather!',
+		desciption:
+			'Once that is done all current and future weather will be populated!',
+	});
+
+	if (weather) {
+		setData(weather);
+	}
 
 	return (
 		<div className='grid row-span-8 col-span-5 mt-40 p-10'>
 			<div>
+				<h2 className='text-3xl text-green-400'>Here&apos;s the Weather:</h2>
 				<p className='text-7xl text-white font-semibold'>
-					Thunderstorm with Heavy Rain
+					{weatherCodes[data.id]}
 				</p>
 			</div>
 			<div className='flex flex-col'>
 				<p className='text-2xl text-white pb-8'>
-					USA, Friday, Feb 20, 2025, 1:55PM
+					Local Time: USA, Friday, Feb 20, 2025, 1:55PM
 				</p>
 				<p className='text-xl text-white font-light'>
-					Variable clouds with snow showers. High of 11&deg;F. Winds 17&deg;E at
-					10 to 20 mph. Chance of percipitation 50%.
+					{/* Variable clouds with snow showers. High of 11&deg;F. Winds 17&deg;E at
+					10 to 20 mph. Chance of percipitation 50%. */}
+					{data.main}
 				</p>
+				<p className='text-xl text-white font-light'>{data.desciption}</p>
 			</div>
 		</div>
 	);

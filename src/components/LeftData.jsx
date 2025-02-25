@@ -2,7 +2,7 @@ import LeftChart from './LeftChart';
 import { useState } from 'react';
 import PropType from 'prop-types';
 
-export default function LeftData({ data }) {
+export default function LeftData({ data, alerts }) {
 	const [weather, setWeather] = useState({
 		temp: 0,
 		feel: 0,
@@ -11,8 +11,20 @@ export default function LeftData({ data }) {
 		humid: 0,
 	});
 
+	const [alert, setAlert] = useState({
+		event: 'No current weather alert for your area.',
+		start: '',
+		end: '',
+		desc: 'We will update you if that changes anytime soon!',
+		tags: '',
+	});
+
 	if (data) {
 		setWeather(data);
+	}
+
+	if (alerts) {
+		setAlert(alerts);
 	}
 
 	// Function to convert given degree to cardinal direction
@@ -98,12 +110,8 @@ export default function LeftData({ data }) {
 			<LeftChart />
 			<div className='row-span-2 mt-4'>
 				<p className='underline text-2xl'>Alerts:</p>
-				<p className='font-light'>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam
-					eligendi ducimus quibusdam autem explicabo? Optio soluta quibusdam
-					quam, a minima, dolore accusantium nisi reiciendis, minus provident
-					magnam possimus cupiditate non.
-				</p>
+				<p className='font-bold'>{alert.event}</p>
+				<p className='font-light'>{alert.desc}</p>
 			</div>
 		</div>
 	);

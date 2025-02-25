@@ -1,6 +1,8 @@
 import useWeather from '../hooks/useWeather';
 import Search from './Search';
 import LeftData from './LeftData';
+import RightData from './RightData';
+import Forecast from './Forecast';
 import { useState } from 'react';
 
 const WeatherDisplay = () => {
@@ -40,10 +42,7 @@ const WeatherDisplay = () => {
 			},
 
 			rightSide: {
-				weatherID: data.current.weather.id,
-				param: data.current.weather.main,
-				desc: data.current.weather.description,
-				icon: data.current.weather.icon,
+				weatherID: data.current.weather,
 			},
 
 			alerts: {
@@ -57,18 +56,29 @@ const WeatherDisplay = () => {
 
 		return (
 			<>
-				<Search sCity={setCity} click={handleSearch} />
-				<LeftData weather={currWeather.leftSide} />
+				<div className='grid grid-rows-12 col-span-3 row-span-12 p-6 bg-transparent backdrop-blur-md bg-clip-padding rounded-r-3xl border-r border-gray-100'>
+					<Search sCity={setCity} click={handleSearch} />
+					<LeftData
+						weather={currWeather.leftSide}
+						alerts={currWeather.alerts}
+					/>
+				</div>
+				<RightData weather={currWeather.rightSide} />
+				<Forecast />
 			</>
 		);
 	}
 
 	// Standard page return
 	return (
-		<div className='grid grid-rows-12 col-span-3 row-span-12 p-6 bg-transparent backdrop-blur-md bg-clip-padding rounded-r-3xl border-r border-gray-100'>
-			<Search sCity={setCity} click={handleSearch} />
-			<LeftData />
-		</div>
+		<>
+			<div className='grid grid-rows-12 col-span-3 row-span-12 p-6 bg-transparent backdrop-blur-md bg-clip-padding rounded-r-3xl border-r border-gray-100'>
+				<Search sCity={setCity} click={handleSearch} />
+				<LeftData />
+			</div>
+			<RightData />
+			<Forecast />
+		</>
 	);
 };
 export default WeatherDisplay;

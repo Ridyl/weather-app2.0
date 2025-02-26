@@ -10,6 +10,20 @@ const WeatherDisplay = () => {
 	const [city, setCity] = useState('');
 	const { fetchWeather } = useWeather(city);
 
+	const now = new Date();
+	const date = now.toLocaleString();
+	const day = now.getDay();
+
+	const daysOfWeek = [
+		'Sunday',
+		'Monday',
+		'Tuesday',
+		'Wednesday',
+		'Thursday',
+		'Friday',
+		'Saturday',
+	];
+
 	const handleSearch = (event) => {
 		event.preventDefault();
 		fetchWeather(city);
@@ -43,6 +57,7 @@ const WeatherDisplay = () => {
 
 			rightSide: {
 				weatherID: data.current.weather,
+				time: data.current.dt,
 			},
 
 			alerts: {

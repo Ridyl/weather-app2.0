@@ -75,20 +75,27 @@ export default function RightData({ weather }) {
 	});
 
 	if (weather) {
-		setData(weather);
+		setData({
+			id: weather.weatherID.id,
+			main: weather.weatherID.main,
+			desciption: weather.weatherID.desciption,
+			time: weather.time,
+		});
 	}
 
 	return (
 		<div className='grid row-span-8 col-span-5 mt-40 p-10'>
 			<div>
-				<h2 className='text-3xl text-green-400'>Here&apos;s the Weather:</h2>
-				<p className='text-7xl text-white font-semibold'>
+				<h2 className='text-3xl text-green-400 drop-shadow-lg'>
+					Here&apos;s the Weather:
+				</h2>
+				<p className='text-7xl text-white font-semibold drop-shadow-lg'>
 					{weatherCodes[data.id]}
 				</p>
 			</div>
 			<div className='flex flex-col'>
-				<p className='text-2xl text-white pb-8'>
-					Local Time: USA, Friday, Feb 20, 2025, 1:55PM
+				<p className='text-2xl text-white pb-8 whitespace-nowrap'>
+					Local Time:
 				</p>
 				<p className='text-xl text-white font-light'>
 					{/* Variable clouds with snow showers. High of 11&deg;F. Winds 17&deg;E at

@@ -31,7 +31,16 @@ const useWeather = () => {
 		}
 	};
 
-	return { ...state, fetchWeather };
+	return {
+		data: state.data,
+		location: state.location,
+		current: state.current,
+		hourly: state.hourly,
+		forecast: state.forecast,
+		loading: state.loading,
+		error: state.error,
+		fetchWeather,
+	};
 };
 
 export default useWeather;

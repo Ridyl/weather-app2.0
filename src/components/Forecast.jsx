@@ -22,7 +22,7 @@ export default function Forecast() {
 							<div>
 								<p>High: {high[i]}&deg;</p>
 								<p>Low: {low[i]}&deg;</p>
-								<p>Percipitation: {rain[i]}%</p>
+								<p>Precipitation: {rain[i]}%</p>
 							</div>
 							<div>
 								<p className='text-4xl'>{day}</p>

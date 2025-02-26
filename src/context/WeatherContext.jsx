@@ -4,8 +4,12 @@ import PropTypes from 'prop-types';
 const WeatherContext = createContext();
 
 const initialState = {
-	loading: false,
 	data: null,
+	location: null,
+	current: null,
+	hourly: null,
+	forecast: null,
+	loading: false,
 	error: null,
 };
 
@@ -20,7 +24,11 @@ const weatherReducer = (state, action) => {
 		case 'FETCH_SUCCESS':
 			return {
 				...state,
-				data: action.weatherData,
+				data: action.data,
+				location: action.data.location,
+				current: action.data.current,
+				hourly: action.data.hourly,
+				forecast: action.data.forecast,
 				loading: false,
 			};
 		case 'FETCH_ERROR':

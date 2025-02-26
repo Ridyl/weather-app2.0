@@ -1,31 +1,11 @@
 import LeftChart from './LeftChart';
-import { useState } from 'react';
-import PropType from 'prop-types';
+import useWeather from '../hooks/useWeather';
 
-export default function LeftData({ data, alerts }) {
-	const [weather, setWeather] = useState({
-		temp: 0,
-		feel: 0,
-		windDeg: 0,
-		uv: 0,
-		humid: 0,
-	});
+export default function LeftData() {
+	const { current, loading } = useWeather();
 
-	const [alert, setAlert] = useState({
-		event: 'No current weather alert for your area.',
-		start: '',
-		end: '',
-		desc: 'We will update you if that changes anytime soon!',
-		tags: '',
-	});
-
-	if (data) {
-		setWeather(data);
-	}
-
-	if (alerts) {
-		setAlert(alerts);
-	}
+	if (loading) return <p>Loading...</p>;
+	if (!current) return <p>No weather data available</p>;
 
 	// Function to convert given degree to cardinal direction
 	function findDirection(degree) {
@@ -61,7 +41,7 @@ export default function LeftData({ data, alerts }) {
 		let low =
 			'If you get the chance, enjoy the sunshine today! The UV index is low so soak up the rays and rejuvinate! ';
 		let med =
-			'Stay in the shade during the hot part of the day, make sure you&apos;re wearing a shirt and have sunscreen on!';
+			"Stay in the shade during the hot part of the day, make sure you're wearing a shirt and have sunscreen on!";
 		let high =
 			'Avoid being outside during the hot part of the day. Make sure to see shade. A shirt, sunscreen and a hat are a must!';
 
@@ -94,19 +74,20 @@ export default function LeftData({ data, alerts }) {
 			<div className='flex flex-col row-span-3 justify-center'>
 				{/* Current Temp */}
 				<div className='flex text-6xl items-baseline'>
-					<p className='flex-1'>{weather.temp}&deg;</p>
+					<p className='flex-1'>{Math.round(current.temp)}&deg;</p>
 					<p className='text-sm mr-0'>feels</p>
-					<p>{weather.feel}&deg;</p>
+					<p>{Math.round(current.feel)}&deg;</p>
 				</div>
 				{/* Humidity and Wind */}
 				<div className='flex items-baseline'>
-					<p className='text-4xl flex-1 font-light'>{weather.humid}%</p>
+					<p className='text-2xl flex-1 font-light'>{current.humid}%</p>
 					<p className='text-sm ml-0.5'>
-						Wind: {findDirection(weather.windDeg)} 6 mph
+						Wind: {findDirection(current.wind_d)} {Math.round(current.wind_s)}
+						mph
 					</p>
 				</div>
 			</div>
-			<UVMessage uv={weather.uv} />
+			<UVMessage uv={current.uv} />
 			<LeftChart />
 			<div className='row-span-2 mt-4'>
 				<p className='underline text-2xl'>Alerts:</p>

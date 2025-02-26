@@ -7,6 +7,7 @@ import {
 	Tooltip,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import useWeather from '../hooks/useWeather';
 
 ChartJS.register(
 	CategoryScale,
@@ -17,6 +18,7 @@ ChartJS.register(
 );
 
 export default function LeftChart() {
+	const { hourly } = useWeather();
 	const labels = [
 		'Current',
 		'+1',
@@ -56,7 +58,7 @@ export default function LeftChart() {
 		labels,
 		datasets: [
 			{
-				data: [15, 17, 19, 22, 25, 28, 30, 29, 26, 22, 19, 16],
+				data: hourly.map((obj) => Math.round(obj.temp)),
 				yAxisID: 'y',
 				backgroundColor: '#fb2c36',
 				borderColor: '#fb2c36',
@@ -65,7 +67,7 @@ export default function LeftChart() {
 				tension: 0.4,
 			},
 			{
-				data: [30, 25, 20, 10, 5, 5, 10, 15, 20, 40, 50, 35],
+				data: hourly.map((obj) => Math.round(obj.pop)),
 				backgroundColor: '#155dfc',
 				borderColor: '#155dfc',
 				pointBackgroundColor: 'transparent',
@@ -86,7 +88,7 @@ export default function LeftChart() {
 							key={index}
 						>
 							<p className='pt-10'>
-								{perc}% {temp[index]}&deg;
+								{perc}&deg; {temp[index]}%
 							</p>
 						</div>
 					))}

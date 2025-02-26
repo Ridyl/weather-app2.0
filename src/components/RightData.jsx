@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function RightData({ weather }) {
+export default function RightData() {
 	const weatherCodes = {
 		101: 'No Weather Data to Pull',
 
@@ -67,43 +67,57 @@ export default function RightData({ weather }) {
 		804: 'Overcast Clouds: 85-100%',
 	};
 
-	let [data, setData] = useState({
-		id: 101,
-		main: 'Enter an area to see the weather!',
-		desciption:
-			'Once that is done all current and future weather will be populated!',
-	});
+	const { location, current, hourly } = useState();
 
-	if (weather) {
-		setData({
-			id: weather.weatherID.id,
-			main: weather.weatherID.main,
-			desciption: weather.weatherID.desciption,
-			time: weather.time,
-		});
+	function Body() {
+		if (!location || !current || !hourly) {
+			return (
+				<>
+					<div className='grid row-span-8 col-span-5 mt-40 p-10'>
+						<div>
+							<h2 className='text-3xl text-green-400 drop-shadow-lg'>
+								Here&apos;s the Weather:
+							</h2>
+							<p className='text-7xl text-white font-semibold drop-shadow-lg'>
+								No Weather Data to Display
+							</p>
+						</div>
+						<div className='flex flex-col'>
+							<p className='text-2xl text-white pb-8 whitespace-nowrap'>
+								When you search for a city, we will update you!
+							</p>
+							<p className='text-xs text-white font-light'></p>
+						</div>
+					</div>
+				</>
+			);
+		} else {
+			return (
+				<div className='grid row-span-8 col-span-5 mt-40 p-10'>
+					<div>
+						<h2 className='text-3xl text-green-400 drop-shadow-lg'>
+							Here&apos;s the Weather:
+						</h2>
+						<p className='text-7xl text-white font-semibold drop-shadow-lg'>
+							{weatherCodes[current.weather_id]}
+						</p>
+					</div>
+					<div className='flex flex-col'>
+						<p className='text-2xl text-white pb-8 whitespace-nowrap'>
+							Local Time: {current.local_time}
+						</p>
+						<p className='text-xs text-white font-light'>
+							{location.message} {}&deg;. Winds are
+							{current.wind_d}
+							&deg; at {Math.round(current.wind_s)} to{' '}
+							{Math.round(current.wind_g)}
+							mph. Chance of precipitation {hourly[0].pop}.
+						</p>
+					</div>
+				</div>
+			);
+		}
 	}
 
-	return (
-		<div className='grid row-span-8 col-span-5 mt-40 p-10'>
-			<div>
-				<h2 className='text-3xl text-green-400 drop-shadow-lg'>
-					Here&apos;s the Weather:
-				</h2>
-				<p className='text-7xl text-white font-semibold drop-shadow-lg'>
-					{weatherCodes[data.id]}
-				</p>
-			</div>
-			<div className='flex flex-col'>
-				<p className='text-2xl text-white pb-8 whitespace-nowrap'>
-					Local Time:
-				</p>
-				<p className='text-xl text-white font-light'>
-					{/* Variable clouds with snow showers. High of 11&deg;F. Winds 17&deg;E at
-					10 to 20 mph. Chance of percipitation 50%. */}
-					{data.main}
-				</p>
-				<p className='text-xl text-white font-light'>{data.desciption}</p>
-			</div>
-		</div>
-	);
+	return <Body />;
 }

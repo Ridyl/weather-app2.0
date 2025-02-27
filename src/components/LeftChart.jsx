@@ -103,7 +103,7 @@ export default function LeftChart() {
 				<p className='flex-1 underline'>Todays Weather</p>
 				<div className='flex pr-2'>
 					<span className='block m-1 rounded-full bg-blue-500 h-3 w-3'></span>
-					<p className='text-sm'>Rain</p>
+					<p className='text-sm'>Precipitation</p>
 				</div>
 				<div className='flex'>
 					<span className='block m-1 rounded-full bg-red-500 h-3 w-3'></span>

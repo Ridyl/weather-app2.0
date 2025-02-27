@@ -1,18 +1,24 @@
+import useWeather from '../hooks/useWeather';
+
 export default function Forecast() {
-	const days = [
-		'Monday',
-		'Tuesday',
-		'Wednesday',
-		'Thursday',
-		'Friday',
-		'Saturday',
-	];
+	// const days = [
+	// 	'Monday',
+	// 	'Tuesday',
+	// 	'Wednesday',
+	// 	'Thursday',
+	// 	'Friday',
+	// 	'Saturday',
+	// ];
 
-	// Test data
-	const high = [72, 75, 79, 77, 73, 70];
-	const low = [54, 57, 59, 61, 57, 55];
-	const rain = [30, 40, 20, 10, 50, 60];
+	// Test dat
 
+	const { forecast } = useWeather();
+	const days = forecast.map((day) => day.date);
+	const high = forecast.map((high) => Math.round(high.max_temp));
+	const low = forecast.map((low) => Math.round(low.min_temp));
+	const rain = forecast.map((pop) => Math.round(pop.pop));
+
+	if (!location) return <p></p>;
 	function ForecastCard() {
 		return (
 			<div className='flex col-start-4 row-start-10 row-span-3 col-span-9 cursor-default ml-2 pb-4'>

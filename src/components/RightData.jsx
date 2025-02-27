@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import useWeather from '../hooks/useWeather';
 
 export default function RightData() {
 	const weatherCodes = {
@@ -67,10 +67,28 @@ export default function RightData() {
 		804: 'Overcast Clouds: 85-100%',
 	};
 
-	const { location, current, hourly } = useState();
+	const { location, current, hourly } = useWeather();
 
 	function Body() {
-		if (!location || !current || !hourly) {
+		function formatDt(timestamp) {
+			const localDate = new Date(timestamp * 1000);
+			const localDay = new Intl.DateTimeFormat('en-US', {
+				weekday: 'long',
+			}).format(localDate);
+			const formattedDate = Intl.DateTimeFormat('en-US', {
+				year: 'numeric',
+				month: '2-digit',
+				day: '2-digit',
+				hour: '2-digit',
+				minute: '2-digit',
+				second: '2-digit',
+				hour12: true,
+			}).format(localDate);
+
+			return `${localDay}, ${formattedDate}`;
+		}
+
+		if (!location) {
 			return (
 				<>
 					<div className='grid row-span-8 col-span-5 mt-40 p-10'>
@@ -96,22 +114,22 @@ export default function RightData() {
 				<div className='grid row-span-8 col-span-5 mt-40 p-10'>
 					<div>
 						<h2 className='text-3xl text-green-400 drop-shadow-lg'>
-							Here&apos;s the Weather:
+							Here&apos;s the Weather for:
 						</h2>
 						<p className='text-7xl text-white font-semibold drop-shadow-lg'>
-							{weatherCodes[current.weather_id]}
+							{location.city}, {location.country}
 						</p>
 					</div>
 					<div className='flex flex-col'>
 						<p className='text-2xl text-white pb-8 whitespace-nowrap'>
-							Local Time: {current.local_time}
+							Local Time: {formatDt(current.local_time)}
 						</p>
-						<p className='text-xs text-white font-light'>
-							{location.message} {}&deg;. Winds are
+						<p className='text-xl text-white font-light'>
+							{location.message} {Math.round(current.temp)}&deg;. Winds are{' '}
 							{current.wind_d}
 							&deg; at {Math.round(current.wind_s)} to{' '}
 							{Math.round(current.wind_g)}
-							mph. Chance of precipitation {hourly[0].pop}.
+							mph. Chance of precipitation {hourly[0].pop}%.
 						</p>
 					</div>
 				</div>

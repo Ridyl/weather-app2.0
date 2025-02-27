@@ -36,40 +36,13 @@ const WeatherDisplay = () => {
 
 	// Return after data is present
 	if (data) {
-		// data {current: {...}, forecast: {...}}
-		console.log('location:', data.location);
-		console.log('current:', data.current);
-		console.log('hourly:', data.hourly);
-		console.log('forecast:', data.forecast);
-
-		function formatDt(timestamp) {
-			const localDate = new Date(timestamp * 1000);
-			const localDay = new Intl.DateTimeFormat('en-US', {
-				weekday: 'long',
-			}).format(date);
-			const formattedDate = Intl.DateTimeFormat('en-US', {
-				year: 'numeric',
-				month: '2-digit',
-				day: '2-digit',
-				hour: '2-digit',
-				minute: '2-digit',
-				second: '2-digit',
-				hour12: true,
-			}).format(localDate);
-
-			return `${localDay}, ${formattedDate}`;
-		}
-
 		return (
 			<>
 				<div className='grid grid-rows-12 col-span-3 row-span-12 p-6 bg-transparent backdrop-blur-md bg-clip-padding rounded-r-3xl border-r border-gray-100'>
 					<Search sCity={setCity} click={handleSearch} />
 					<LeftData weather={data.current} />
 				</div>
-				{/* <RightData
-					weather={currWeather.rightSide}
-					dateString={formatDt(currWeather.rightSide.time)}
-				/> */}
+				<RightData />
 				<Forecast />
 			</>
 		);
@@ -82,7 +55,7 @@ const WeatherDisplay = () => {
 				<Search sCity={setCity} click={handleSearch} />
 				<LeftData />
 			</div>
-			<RightData date={date} day={daysOfWeek[day]} />
+			<RightData />
 			<Forecast />
 		</>
 	);

@@ -28,11 +28,11 @@ app.get('/api/search/:city', async (req, res) => {
 				city: initial.data.name,
 				sunrise: initial.data.sys.sunrise,
 				sunset: initial.data.sys.sunset,
-				// message: initial.data.daily[0].summary,
+				// message: initial.data.daily.summary,
 			},
 
 			current: {
-				weather_id: initial.data.weather.id,
+				weather_id: weather.data.current.weather.id,
 				temp: initial.data.main.temp,
 				feel: initial.data.main.feels_like,
 				min_temp: initial.data.main.temp_min,
@@ -47,6 +47,7 @@ app.get('/api/search/:city', async (req, res) => {
 				local_time: initial.data.dt,
 				uv: weather.data.current.uvi,
 				summary: weather.data.daily.summary,
+				alerts: weather.data.alerts,
 			},
 
 			// creats new objects from the hourly object array, starts at current hour, 12 total hours

@@ -42,6 +42,7 @@ app.get('/api/search/:city', async (req, res) => {
 				clouds: initial.data.clouds.all,
 				rain: weather.data.current.rain,
 				snow: weather.data.current.snow,
+				time_offset: weather.data.timezone,
 				local_time: initial.data.dt,
 				uv: weather.data.current.uvi,
 				summary: weather.data.daily[0].summary,

@@ -97,6 +97,7 @@ export default function RightData() {
 				weekday: 'long',
 			}).format(localDate);
 			const formattedDate = Intl.DateTimeFormat('en-US', {
+				timeZone: current.time_offset,
 				year: 'numeric',
 				month: '2-digit',
 				day: '2-digit',

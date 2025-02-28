@@ -2,10 +2,23 @@ import LeftChart from './LeftChart';
 import useWeather from '../hooks/useWeather';
 
 export default function LeftData() {
-	const { current, loading } = useWeather();
+	const { current } = useWeather();
 
-	if (loading) return <p>Loading...</p>;
-	if (!current) return <p>No weather data available</p>;
+	if (!current)
+		return (
+			<div className='grid col-span-3 row-span-12 text-white pl-3 pr-3'>
+				<div className='flex flex-col row-span-2 justify-center p-4'>
+					<div className='flex text-6xl items-baseline'>
+						<p className='flex-1'>Please search for a city above!</p>
+					</div>
+					<div className='flex items-baseline'>
+						<p className='text-2xl flex-1 font-light'>
+							All current weather information will be loaded here!
+						</p>
+					</div>
+				</div>
+			</div>
+		);
 
 	// Function to convert given degree to cardinal direction
 	function findDirection(degree) {
@@ -47,23 +60,27 @@ export default function LeftData() {
 
 		if (uv <= 2) {
 			message = low;
-			color = 'text-green-400';
+			color = 'text-green-400 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]';
 		} else if (uv > 2 && uv <= 7) {
 			message = med;
-			color = 'text-yellow-500';
+			color = 'text-yellow-500 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]';
 		} else if (uv > 7) {
 			message = high;
-			color = 'text-red-500';
+			color = 'text-red-500 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]';
 		}
 
 		return (
 			<div className=''>
 				<div className='flex justify-between text-2xl'>
-					<p className='underline'>UV Index: </p>
+					<p className='underline drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'>
+						UV Index:{' '}
+					</p>
 					<p className={color}>{roundedUV}</p>
 				</div>
 				<div className='flex justify-between mt-1'>
-					<p className='text-lg font-light'>{message}</p>
+					<p className='text-lg font-light drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'>
+						{message}
+					</p>
 				</div>
 			</div>
 		);
@@ -71,17 +88,25 @@ export default function LeftData() {
 
 	return (
 		<div className='grid col-span-3 row-span-12 text-white pl-3 pr-3'>
-			<div className='flex flex-col row-span-3 justify-center'>
+			<div className='flex flex-col row-span-2 justify-center p-4'>
 				{/* Current Temp */}
 				<div className='flex text-6xl items-baseline'>
-					<p className='flex-1'>{Math.round(current.temp)}&deg;</p>
-					<p className='text-sm mr-0'>feels</p>
-					<p>{Math.round(current.feel)}&deg;</p>
+					<p className='flex-1 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'>
+						{Math.round(current.temp)}&deg;
+					</p>
+					<p className='text-sm mr-0 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'>
+						feels
+					</p>
+					<p className='drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'>
+						{Math.round(current.feel)}&deg;
+					</p>
 				</div>
 				{/* Humidity and Wind */}
 				<div className='flex items-baseline'>
-					<p className='text-2xl flex-1 font-light'>{current.humid}%</p>
-					<p className='text-sm ml-0.5'>
+					<p className='text-2xl flex-1 font-light drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'>
+						{current.humid}% <span className='text-sm'>humidity</span>
+					</p>
+					<p className='text-sm ml-0.5 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'>
 						Wind: {findDirection(current.wind_d)} {Math.round(current.wind_s)}
 						mph
 					</p>
@@ -89,11 +114,6 @@ export default function LeftData() {
 			</div>
 			<UVMessage uv={current.uv} />
 			<LeftChart />
-			<div className='row-span-2 mt-4'>
-				<p className='underline text-2xl'>Alerts:</p>
-				<p className='font-bold'>{alert.event}</p>
-				<p className='font-light'>{alert.desc}</p>
-			</div>
 		</div>
 	);
 }

@@ -2,8 +2,6 @@ import useWeather from '../hooks/useWeather';
 
 export default function RightData() {
 	const weatherCodes = {
-		101: 'No Weather Data to Pull',
-
 		200: 'Thunderstorm with Light Rain',
 		201: 'Thunderstorm with Rain',
 		202: 'Thunderstorm with Heavy Rain',
@@ -60,14 +58,37 @@ export default function RightData() {
 		781: 'Tornado',
 
 		800: 'Clear Sky',
-
-		801: 'Few Clouds: 11-25%',
-		802: 'Scattered Clouds: 25-50%',
-		803: 'Broken Clouds: 51-84%',
-		804: 'Overcast Clouds: 85-100%',
+		801: 'Few Clouds',
+		802: 'Scattered Clouds',
+		803: 'Broken Clouds',
+		804: 'Overcast Clouds',
 	};
 
 	const { location, current, hourly } = useWeather();
+
+	function findDirection(degree) {
+		const cardinal = [
+			'N',
+			'NNE',
+			'NE',
+			'ENE',
+			'E',
+			'ESE',
+			'SE',
+			'SSE',
+			'S',
+			'SSW',
+			'SW',
+			'WSW',
+			'W',
+			'WNW',
+			'NW',
+			'NNW',
+		];
+
+		const section = Math.floor(degree / 22.5 + 0.5);
+		return cardinal[section % 16];
+	}
 
 	function Body() {
 		function formatDt(timestamp) {
@@ -101,7 +122,7 @@ export default function RightData() {
 							</p>
 						</div>
 						<div className='flex flex-col'>
-							<p className='text-2xl text-white pb-8 whitespace-nowrap'>
+							<p className='text-2xl text-white pb-8 whitespace-nowrap drop-shadow-lg'>
 								When you search for a city, we will update you!
 							</p>
 							<p className='text-xs text-white font-light'></p>
@@ -117,18 +138,23 @@ export default function RightData() {
 							Here&apos;s the Weather for:
 						</h2>
 						<p className='text-7xl text-white font-semibold drop-shadow-lg'>
-							{location.city}, {location.country}
+							{location.city} - {location.country} :
+						</p>
+						<p className='text-6xl text-white drop-shadow-lg'>
+							{weatherCodes[current.weather_id]}
 						</p>
 					</div>
 					<div className='flex flex-col'>
-						<p className='text-2xl text-white pb-8 whitespace-nowrap'>
+						<p className='text-2xl text-white pb-8 whitespace-nowrap drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'>
 							Local Time: {formatDt(current.local_time)}
 						</p>
-						<p className='text-xl text-white font-light'>
-							{location.message} {Math.round(current.temp)}&deg;. Winds are{' '}
-							{current.wind_d}
-							&deg; at {Math.round(current.wind_s)} to{' '}
-							{Math.round(current.wind_g)}
+						<p className='text-xl text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'>
+							Currently in {location.city} it is {Math.round(current.temp)}
+							&deg; with a low of {Math.round(current.min_temp)}&deg; and a high
+							of {Math.round(current.max_temp)}&deg;. {current.summary}. Winds
+							are {current.wind_d}
+							&deg; {findDirection(current.wind_d)} at{' '}
+							{Math.round(current.wind_s)} to {Math.round(current.wind_g) || 12}
 							mph. Chance of precipitation {hourly[0].pop}%.
 						</p>
 					</div>

@@ -20,7 +20,6 @@ app.get('/api/search/:city', async (req, res) => {
 		// call after extracting lat lon to get extra weather data
 		const weather_url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
 		const weather = await axios.get(weather_url);
-
 		// object construction for all needed weather data
 		const weatherData = {
 			location: {
@@ -28,15 +27,14 @@ app.get('/api/search/:city', async (req, res) => {
 				city: initial.data.name,
 				sunrise: initial.data.sys.sunrise,
 				sunset: initial.data.sys.sunset,
-				// message: initial.data.daily.summary,
 			},
 
 			current: {
-				weather_id: weather.data.current.weather.id,
+				weather_id: weather.data.current.weather[0].id,
 				temp: initial.data.main.temp,
 				feel: initial.data.main.feels_like,
-				min_temp: initial.data.main.temp_min,
-				max_temp: initial.data.main.temp_max,
+				min_temp: weather.data.daily[0].temp.min,
+				max_temp: weather.data.daily[0].temp.max,
 				humid: initial.data.main.humidity,
 				wind_s: initial.data.wind.speed,
 				wind_g: initial.data.wind.gust,
@@ -46,8 +44,7 @@ app.get('/api/search/:city', async (req, res) => {
 				snow: weather.data.current.snow,
 				local_time: initial.data.dt,
 				uv: weather.data.current.uvi,
-				summary: weather.data.daily.summary,
-				alerts: weather.data.alerts,
+				summary: weather.data.daily[0].summary,
 			},
 
 			// creats new objects from the hourly object array, starts at current hour, 12 total hours

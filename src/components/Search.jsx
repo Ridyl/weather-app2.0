@@ -21,7 +21,7 @@ export default function Search({ sCity, click }) {
 							onClick={click}
 						>
 							<svg
-								className='w-4 h-4 text-gray-100 dark:text-gray-100'
+								className='w-4 h-4 text-gray-100 dark:text-gray-100 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]'
 								aria-hidden='true'
 								xmlns='http://www.w3.org/2000/svg'
 								fill='none'

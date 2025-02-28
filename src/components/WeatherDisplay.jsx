@@ -18,7 +18,7 @@ const WeatherDisplay = () => {
 	if (loading)
 		return (
 			<>
-				<div className='grid grid-rows-12 col-span-3 row-span-12 p-6 bg-transparent backdrop-blur-md bg-clip-padding rounded-r-3xl border-r border-gray-100'>
+				<div className='grid grid-rows-12 col-span-3 row-span-12 p-6 backdrop-brightness-85 backdrop-blur-md bg-clip-padding rounded-r-3xl border-r border-gray-100'>
 					<Search sCity={setCity} click={handleSearch} />
 					<LeftData />
 				</div>
@@ -33,7 +33,7 @@ const WeatherDisplay = () => {
 	if (data) {
 		return (
 			<>
-				<div className='grid grid-rows-12 col-span-3 row-span-12 p-6 bg-transparent backdrop-blur-md bg-clip-padding rounded-r-3xl border-r border-gray-100'>
+				<div className='grid grid-rows-12 col-span-3 row-span-12 p-6 backdrop-brightness-85 backdrop-blur-md bg-clip-padding rounded-r-3xl border-r border-gray-100'>
 					<Search sCity={setCity} click={handleSearch} />
 					<LeftData weather={data.current} />
 				</div>
@@ -46,7 +46,7 @@ const WeatherDisplay = () => {
 	// Standard page return
 	return (
 		<>
-			<div className='grid grid-rows-12 col-span-3 row-span-12 p-6 bg-transparent backdrop-blur-md bg-clip-padding rounded-r-3xl border-r border-gray-100'>
+			<div className='grid grid-rows-12 col-span-3 row-span-12 p-6 backdrop-brightness-85 backdrop-blur-md bg-clip-padding rounded-r-3xl border-r border-gray-100'>
 				<Search sCity={setCity} click={handleSearch} />
 				<LeftData />
 			</div>

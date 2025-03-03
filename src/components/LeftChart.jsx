@@ -6,6 +6,7 @@ import {
 	LineElement,
 	Tooltip,
 } from 'chart.js';
+import PropType from 'prop-types';
 import { Line } from 'react-chartjs-2';
 import useWeather from '../hooks/useWeather';
 
@@ -81,7 +82,7 @@ export default function LeftChart() {
 		return (
 			<div className='flex flex-col mt-auto'>
 				<Line options={options} data={data} />
-				<div className='flex flex-1 justify-around bottom-0 absolute w-full h-60 text-center text-xs'>
+				<div className='flex flex-1 justify-around bottom-0 absolute w-full h-75 text-center text-xs'>
 					{rain.map((perc, index) => (
 						<div
 							className='flex-1 bg-linear-to-t from-white to-transparent opacity-0 hover:opacity-60 transition-opacity'
@@ -114,3 +115,8 @@ export default function LeftChart() {
 		</div>
 	);
 }
+
+LeftChart.propTypes = {
+	rain: PropType.array,
+	temp: PropType.array,
+};

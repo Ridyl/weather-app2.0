@@ -131,37 +131,37 @@ export default function RightData() {
 					</div>
 				</>
 			);
-		} else {
-			return (
-				<div className='grid row-span-8 col-span-5 mt-40 p-10'>
-					<div>
-						<h2 className='text-3xl text-green-400 drop-shadow-lg'>
-							Here&apos;s the Weather for:
-						</h2>
-						<p className='text-7xl text-white font-semibold drop-shadow-lg'>
-							{location.city} - {location.country} :
-						</p>
-						<p className='text-6xl text-white drop-shadow-lg'>
-							{weatherCodes[current.weather_id]}
-						</p>
-					</div>
-					<div className='flex flex-col'>
-						<p className='text-2xl text-white pb-8 whitespace-nowrap drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'>
-							Local Time: {formatDt(current.local_time)}
-						</p>
-						<p className='text-xl text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'>
-							Currently in {location.city} it is {Math.round(current.temp)}
-							&deg; with a low of {Math.round(current.min_temp)}&deg; and a high
-							of {Math.round(current.max_temp)}&deg;. {current.summary}. Winds
-							are {current.wind_d}
-							&deg; {findDirection(current.wind_d)} at{' '}
-							{Math.round(current.wind_s)} to {Math.round(current.wind_g) || 12}
-							mph. Chance of precipitation {hourly[0].pop}%.
-						</p>
-					</div>
-				</div>
-			);
 		}
+
+		return (
+			<div className='grid row-span-8 col-span-5 mt-40 p-10'>
+				<div>
+					<h2 className='text-3xl text-green-400 drop-shadow-lg'>
+						Here&apos;s the Weather for:
+					</h2>
+					<p className='text-7xl text-white font-semibold drop-shadow-lg'>
+						{location.city} - {location.country} :
+					</p>
+					<p className='text-6xl text-white drop-shadow-lg'>
+						{weatherCodes[current.weather_id]}
+					</p>
+				</div>
+				<div className='flex flex-col'>
+					<p className='text-2xl text-white pb-8 whitespace-nowrap drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'>
+						Local Time: {formatDt(current.local_time)}
+					</p>
+					<p className='text-xl text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'>
+						Currently in {location.city} it is {Math.round(current.temp)}
+						&deg; with a low of {Math.round(current.min_temp)}&deg; and a high
+						of {Math.round(current.max_temp)}&deg;. {current.summary}. Winds are{' '}
+						{current.wind_d}
+						&deg; {findDirection(current.wind_d)} at{' '}
+						{Math.round(current.wind_s)} to {Math.round(current.wind_g) || 12}
+						mph. Chance of precipitation {hourly[0].pop}%.
+					</p>
+				</div>
+			</div>
+		);
 	}
 
 	return <Body />;

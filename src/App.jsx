@@ -38,6 +38,7 @@ function App() {
 			</div>
 		);
 	}
+
 	return (
 		<div
 			className='inline-grid grid-rows-12 grid-cols-12 w-full bg-cover'

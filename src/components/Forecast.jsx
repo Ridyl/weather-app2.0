@@ -2,7 +2,9 @@ import useWeather from '../hooks/useWeather';
 
 export default function Forecast() {
 	const { forecast } = useWeather();
+
 	if (!forecast) return <></>;
+
 	const days = forecast.map((day) => day.date);
 	const high = forecast.map((high) => Math.round(high.max_temp));
 	const low = forecast.map((low) => Math.round(low.min_temp));
@@ -32,11 +34,11 @@ export default function Forecast() {
 								<div className='flex flex-col'>
 									<span
 										className='block h-2 bg-red-500 mt-3'
-										style={{ width: (high[i] / 100) * 100 }}
+										style={{ width: high[i] }}
 									></span>
 									<span
 										className='block h-2 bg-green-500 mt-2'
-										style={{ width: (low[i] / 100) * 100 }}
+										style={{ width: low[i] }}
 									></span>
 									<span
 										className='block h-2 bg-blue-500 mt-2'

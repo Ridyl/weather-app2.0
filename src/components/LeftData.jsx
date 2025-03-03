@@ -1,5 +1,6 @@
 import LeftChart from './LeftChart';
 import useWeather from '../hooks/useWeather';
+import PropType from 'prop-types';
 
 export default function LeftData() {
 	const { current } = useWeather();
@@ -117,3 +118,7 @@ export default function LeftData() {
 		</div>
 	);
 }
+
+LeftData.propTypes = {
+	uv: PropType.num,
+};
